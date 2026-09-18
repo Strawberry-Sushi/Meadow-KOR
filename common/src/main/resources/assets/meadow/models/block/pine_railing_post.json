@@ -2,7 +2,8 @@
 	"format_version": "1.21.11",
 	"credit": "Made by Satisfy",
 	"textures": {
-		"3": "meadow:block/pine_table_top"
+		"3": "meadow:block/pine_table_top",
+		"particle": "meadow:block/pine_table_middle"
 	},
 	"elements": [
 		{

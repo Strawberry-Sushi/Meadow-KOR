@@ -2,6 +2,9 @@
 
 **Fixed**
 * Alpine Birch Sapling not being pottable
+* Cooking Pot now prefers the most specific matching recipe and no longer crafts anything while unused ingredients remain in the pot.
+* Fixed a rare crash during mod initialization caused by an incorrect registry load order.
+* Pine Railing Post missing particle texture.
 
 ***
 

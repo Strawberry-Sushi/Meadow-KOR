@@ -281,6 +281,49 @@ public class CookingCauldronBlockEntity extends BlockEntity implements Implement
         setChanged();
     }
 
+    private CookingCauldronRecipe findMostSpecificRecipe(Level world) {
+        var allRecipes = world.getRecipeManager().getAllRecipesFor(RecipeRegistry.COOKING.get());
+        CookingCauldronRecipe bestRecipe = null;
+        int maxIngredients = 0;
+
+        for (RecipeHolder<CookingCauldronRecipe> recipeHolder : allRecipes) {
+            CookingCauldronRecipe recipe = recipeHolder.value();
+            if (matchesRecipe(recipe)) {
+                int ingredientCount = recipe.getIngredients().size();
+                if (ingredientCount > maxIngredients) {
+                    maxIngredients = ingredientCount;
+                    bestRecipe = recipe;
+                }
+            }
+        }
+
+        return bestRecipe;
+    }
+
+    private boolean matchesRecipe(CookingCauldronRecipe recipe) {
+        boolean[] ingredientUsed = new boolean[INGREDIENTS_END + 1];
+
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            boolean found = false;
+            for (int slotIndex = INGREDIENTS_START; slotIndex <= INGREDIENTS_END; slotIndex++) {
+                if (!ingredientUsed[slotIndex] && ingredient.test(getItem(slotIndex))) {
+                    ingredientUsed[slotIndex] = true;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+
+        for (int slotIndex = INGREDIENTS_START; slotIndex <= INGREDIENTS_END; slotIndex++) {
+            if (!ingredientUsed[slotIndex] && !getItem(slotIndex).isEmpty()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void tick(Level world) {
         if (world.isClientSide()) return;
 
@@ -296,11 +339,7 @@ public class CookingCauldronBlockEntity extends BlockEntity implements Implement
 
         isBeingBurned = isBeingBurned();
 
-        RecipeHolder<CookingCauldronRecipe> recipeHolder = world.getRecipeManager()
-                .getRecipeFor(RecipeRegistry.COOKING.get(), CraftingInput.of(1, 6, inventory.subList(1, 7)), world)
-                .orElse(null);
-
-        CookingCauldronRecipe recipe = recipeHolder != null ? recipeHolder.value() : null;
+        CookingCauldronRecipe recipe = findMostSpecificRecipe(world);
 
         if (isBeingBurned && canCraft(recipe) && fluidLevel >= recipe.getFluidAmount()) {
             if (currentCraftingDuration == 0 && cookingTime == 0) {

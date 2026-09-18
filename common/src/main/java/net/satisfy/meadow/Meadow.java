@@ -13,8 +13,8 @@ public class Meadow {
 
     public static void init() {
         DataFixerEntries.init();
-        EntityTypeRegistry.init();
         ObjectRegistry.init();
+        EntityTypeRegistry.init();
         ParticleTypeRegistry.init();
         TabRegistry.init();
         RecipeRegistry.init();
