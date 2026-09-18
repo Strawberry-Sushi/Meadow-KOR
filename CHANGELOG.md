@@ -6,6 +6,7 @@
 * Cooking Pot now prefers the most specific matching recipe and no longer crafts anything while unused ingredients remain in the pot.
 * Fixed a rare crash during mod initialization caused by an incorrect registry load order.
 * Pine Railing Post missing particle texture.
+* Wardrobe, Wheelbarrow/Flower Pot/Flower Box/Dresser and Cheese Rack now properly expose their inventory as a vanilla container, fixing incompatibilities with other mods.
 
 ***
 

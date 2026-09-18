@@ -15,9 +15,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.meadow.core.registry.EntityTypeRegistry;
 import net.satisfy.meadow.core.util.GeneralUtil;
+import net.satisfy.meadow.core.world.ImplementedInventory;
 import org.jetbrains.annotations.NotNull;
 
-public class StorageBlockEntity extends BlockEntity {
+public class StorageBlockEntity extends BlockEntity implements ImplementedInventory {
 
     private int size;
 
@@ -95,6 +96,11 @@ public class StorageBlockEntity extends BlockEntity {
     }
 
     public NonNullList<ItemStack> getInventory() {
+        return inventory;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getItems() {
         return inventory;
     }
 }

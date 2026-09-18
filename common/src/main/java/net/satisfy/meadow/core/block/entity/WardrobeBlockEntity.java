@@ -16,9 +16,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.meadow.core.registry.EntityTypeRegistry;
 import net.satisfy.meadow.core.util.GeneralUtil;
+import net.satisfy.meadow.core.world.ImplementedInventory;
 import org.jetbrains.annotations.NotNull;
 
-public class WardrobeBlockEntity extends BlockEntity {
+public class WardrobeBlockEntity extends BlockEntity implements ImplementedInventory {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public static final int SLOT_HEAD = 0;
@@ -40,6 +41,11 @@ public class WardrobeBlockEntity extends BlockEntity {
     }
 
     public NonNullList<ItemStack> getInventory() {
+        return this.inventory;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getItems() {
         return this.inventory;
     }
 

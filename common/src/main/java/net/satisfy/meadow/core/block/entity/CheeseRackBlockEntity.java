@@ -16,12 +16,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.meadow.core.registry.EntityTypeRegistry;
 import net.satisfy.meadow.core.util.GeneralUtil;
+import net.satisfy.meadow.core.world.ImplementedInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheeseRackBlockEntity extends BlockEntity {
+public class CheeseRackBlockEntity extends BlockEntity implements ImplementedInventory {
 
     private NonNullList<ItemStack> inventory;
 
@@ -62,7 +63,7 @@ public class CheeseRackBlockEntity extends BlockEntity {
         return inventory.get(slot);
     }
 
-    public Item[] getItems() {
+    public Item[] getItemTypes() {
         List<Item> items = new ArrayList<>();
         for (ItemStack stack : inventory) {
             if (!stack.isEmpty()) {
@@ -70,6 +71,11 @@ public class CheeseRackBlockEntity extends BlockEntity {
             }
         }
         return items.toArray(new Item[0]);
+    }
+
+    @Override
+    public NonNullList<ItemStack> getItems() {
+        return inventory;
     }
 
     @Override
